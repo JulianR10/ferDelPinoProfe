@@ -1,0 +1,94 @@
+:root{--deep:#0a2a8a;--blue:#0f3fc4;--cyan:#22c8ff;--yellow:#ffe14a;--orange:#ff7a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#061a5c}
+body{font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.02em;color:#fff;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;text-transform:inherit;text-align:inherit}
+a{color:inherit;text-decoration:none}
+h1,.big{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px 0 var(--deep)}
+
+/* escenario: foto + velo azul + franja diagonal del menú */
+.stage{position:relative;height:100vh;height:100svh;overflow:hidden;background:#7fb4e0}
+.bg{position:absolute;inset:-3%;background:#7fb4e0 url(/campoTenis.webp) 50% 55%/cover no-repeat;filter:saturate(.9);animation:drift 24s ease-in-out infinite alternate}
+@keyframes drift{to{transform:scale(1.05) translateX(-1%)}}
+.wash{position:absolute;inset:0;background:linear-gradient(100deg,transparent 25%,#0a2a8a55 60%,#0a2a8ab0 100%),repeating-linear-gradient(-60deg,#ffffff12 0 2px,transparent 2px 48px)}
+.slab{position:absolute;top:-5%;bottom:-5%;right:-8vw;width:50vw;background:linear-gradient(#0f3fc4ee,#0a2a8af5);transform:skewX(-10deg);border-left:6px solid #fff;box-shadow:-14px 0 0 var(--orange),-28px 0 0 #ffffff55}
+
+/* Fernando */
+.fer{position:absolute;left:2vw;bottom:-2svh;width:min(46vw,94svh);aspect-ratio:1;z-index:2;pointer-events:none}
+.fer::before{content:"";position:absolute;left:20%;width:60%;bottom:1%;height:6%;background:radial-gradient(#0007,transparent 70%);filter:blur(4px)} /* sombra bajo los pies */
+.fer img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;animation:bob .8s steps(2) infinite}
+@keyframes bob{50%{transform:translateY(-1.2%)}}
+
+/* placa del jugador (abajo a la izquierda, como en la selección de personaje) */
+.plate{position:absolute;left:3vw;bottom:5svh;z-index:4;display:flex;align-items:center;gap:12px;max-width:44vw;padding:6px 24px 6px 6px;background:linear-gradient(var(--blue),var(--deep));border:4px solid #fff;box-shadow:0 6px 0 var(--deep);transform:skewX(-8deg)}
+.plate .face{flex:none;width:64px;height:64px;border:3px solid #fff;background:#1a4fd0 url(/fer1.webp) -50px 14px/156px 156px no-repeat}
+.plate h1{font-size:clamp(1.5rem,3vw,2.8rem);line-height:.92;-webkit-text-stroke:2px var(--deep);text-shadow:0 3px 0 var(--deep)}
+.flag{display:inline-block;width:1.5em;height:1em;margin-right:.45em;vertical-align:-.1em;border:1px solid #fff;background:linear-gradient(#74acdf 33.3%,#fff 33.3% 66.6%,#74acdf 66.6%)}
+.plate p{font-size:clamp(.78rem,1.15vw,1.05rem);color:var(--yellow);text-shadow:0 2px 0 var(--deep)}
+
+/* menú de opciones + panel de detalle (columna derecha) */
+.menu-col{position:absolute;right:6vw;top:50%;transform:translateY(-50%);width:min(34vw,500px);z-index:4;display:flex;flex-direction:column;gap:14px}
+.menu-col>*{animation:slide .4s steps(4) both;animation-delay:calc(var(--i)*120ms + 200ms)}
+@keyframes slide{from{opacity:0;transform:translateX(80px)}}
+.ribbon{align-self:flex-start;background:var(--orange);border:3px solid #fff;padding:2px 22px;font-size:1.25rem;box-shadow:0 4px 0 var(--deep);transform:skewX(-12deg);animation-name:slideSk}
+@keyframes slideSk{from{opacity:0;transform:translateX(80px) skewX(-12deg)}}
+.menu{display:flex;flex-direction:column;gap:8px}
+.mi{display:flex;align-items:center;gap:12px;padding:7px 16px 7px 7px;background:linear-gradient(90deg,#0f3fc4f0,#0a2a8af0);border:3px solid #fff;box-shadow:0 4px 0 var(--deep);transform:skewX(-12deg);font-size:clamp(1.1rem,1.9vw,1.7rem);line-height:1;transition:transform .15s steps(3)}
+.mi .ico{flex:none;width:2em;height:2em;display:grid;place-items:center;overflow:hidden;border:2px solid #fff;background:#1a4fd0;font-style:normal;font-size:.85em}
+.mi .ico svg{width:1.15em;height:1.15em}
+.mi .txt{display:flex;flex-direction:column;min-width:0}
+.mi .short{display:none}
+@media (min-aspect-ratio:1/1){.mi .ico.thumb{background:url(/campoMiniatura.webp) center/cover}.mi .ico.thumb svg{display:none}}
+.mi .arr{margin-left:auto;opacity:0;color:var(--deep)}
+.mi.on{background:linear-gradient(90deg,var(--yellow),#ff9f1a);color:var(--deep);transform:skewX(-12deg) translateX(-16px)}
+.mi.on .arr{opacity:1;animation:blink .8s steps(2) infinite}
+.mi:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.panel{background:linear-gradient(#fff,#e7f1ff);color:var(--deep);border:4px solid #fff;box-shadow:0 6px 0 var(--deep),0 0 0 4px var(--blue)}
+.panel h2{background:linear-gradient(90deg,var(--blue),var(--cyan));color:#fff;padding:3px 16px;font-size:1.2rem;text-shadow:0 2px 0 var(--deep)}
+.pbody{display:flex;flex-direction:column;justify-content:center;gap:9px;min-height:190px;padding:11px 16px 13px;animation:pop .25s steps(3)}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+@keyframes blink{50%{opacity:0}}
+.pbody p{font-style:normal;font-weight:600;text-transform:none;font-size:1rem;line-height:1.3}
+.pbody .go{color:var(--orange);font-weight:800}
+.days,.gauge{display:flex;gap:5px}
+.d{position:relative;flex:1;padding:4px 2px;text-align:center;background:#c9d6f5;color:#7a89b8;border:2px solid #fff;font-size:.95rem;line-height:1.1}
+.d.lit{background:linear-gradient(var(--yellow),var(--orange));color:var(--deep);border-color:var(--deep)}
+.d.today{outline:3px solid var(--deep);outline-offset:2px}
+.d small{display:block;font-size:.58rem;line-height:1}
+.gauge i{flex:1;height:18px;background:linear-gradient(var(--yellow),var(--orange));border:2px solid var(--deep);transform:skewX(-20deg)}
+.hint{display:flex;justify-content:flex-end;gap:18px;font-size:.8rem;text-shadow:0 2px 0 var(--deep)}
+.hint kbd{display:inline-block;min-width:1.7em;margin-right:4px;padding:0 5px;text-align:center;font:inherit;color:var(--deep);background:#fff;border-radius:3px;text-shadow:none}
+@media(hover:none){.hint{display:none}}
+
+
+/* pie */
+.firma img{display:block;width:100%;height:auto}
+.firma{position:absolute;right:16px;bottom:10px;z-index:5;width:120px;height:auto;filter:brightness(0) invert(1) drop-shadow(0 1px 2px #000c);opacity:.9}
+
+/* celular (vertical): sin clics. La información ya está a la vista, con símbolos */
+@media (max-aspect-ratio:1/1){
+  .slab{display:none}
+  .wash{background:linear-gradient(0deg,#0a2a8af2 0%,#0a2a8acc 55%,transparent 80%)}
+  .fer{left:50%;top:4svh;bottom:auto;transform:translateX(-50%);width:min(90vw,42svh)}
+  .plate{left:50%;bottom:auto;top:calc(4svh + min(90vw,42svh) - 14px);width:max-content;max-width:94vw;transform:translateX(-50%) skewX(-8deg);padding-right:16px}
+  .plate .face{width:48px;height:48px;background-size:117px 117px;background-position:-37px 10px}
+  .plate h1{font-size:1.5rem}
+  .menu-col{left:3vw;right:3vw;top:auto;bottom:48px;width:auto;transform:none}
+  .ribbon,.panel,.hint{display:none}
+  .menu{gap:8px}
+  .mi{gap:10px;padding:5px 12px 5px 5px;min-height:52px;font-size:1rem}
+  .mi .ico{width:2.2em;height:2.2em}
+  .mi .short{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;font-size:1.05rem;line-height:1.15}
+  .mi:not(.main) .lbl{font-size:.68rem;line-height:1;color:var(--yellow);letter-spacing:.08em}
+  .mi.main .lbl{font-size:1.25rem}
+  .mi .note{flex-basis:100%;font-style:normal;font-weight:600;font-size:.7rem;text-transform:none;opacity:.85}
+  .sy{display:inline-flex;gap:6px}
+  .sy span{display:grid;place-items:center;opacity:.55}
+  .sy svg{width:1.15em;height:1.15em}
+  .sy .now{opacity:1;color:var(--yellow)}
+  .mi.on{background:linear-gradient(90deg,#0f3fc4f0,#0a2a8af0);color:#fff;transform:skewX(-12deg)}
+  .mi.on .arr{opacity:0}
+  .mi.main,.mi.main.on{background:linear-gradient(90deg,var(--yellow),#ff9f1a);color:var(--deep)}
+  .mi.main .arr{opacity:1;animation:blink .8s steps(2) infinite}
+  .firma{width:96px;right:10px;bottom:12px}
+}

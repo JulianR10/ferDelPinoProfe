@@ -1,0 +1,2 @@
+export const WA = 'https://wa.me/5493572533876?text=' + encodeURIComponent('Hola Fernando, quiero reservar una clase de tenis');
+export const MAPS = 'https://www.google.com/maps/place/Club+Sportivo+Laguna+Larga/@-31.780256,-63.7985962,911m/data=!3m2!1e3!4b1!4m6!3m5!1s0x95cd31b8e3cb9713:0xc2efa7c7cd8f1009!8m2!3d-31.780256!4d-63.7960159!16s%2Fg%2F11bw5hj55x?entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D';
