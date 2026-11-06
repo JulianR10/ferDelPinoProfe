@@ -169,12 +169,10 @@ export default function Game() {
         </div>
       </div>
 
-      <p className="ribbon">Datos</p>
-      {slam && (
-        <p className={`next${slam.vivo ? ' live' : ''}`} title={`Cuadro principal: ${corta(slam.d)} al ${corta(slam.h)} de ${slam.h.slice(0, 4)}`}>
-          <TrophyIcon /><span>{slam.n}<i className="sep"> · </i><b>{slam.texto}</b></span>
-        </p>
-      )}
+      {slam && (() => {
+        const t = <span className="tk"><TrophyIcon /><b>{slam.n}</b> · {slam.texto} · cuadro principal del {corta(slam.d)} al {corta(slam.h)}</span>;
+        return <div className={`ticker${slam.vivo ? ' live' : ''}`} role="note"><div className="belt">{t}{t}{t}{t}</div></div>;
+      })()}
 
       <section className="menu-col">
         <div className="info" style={{ '--i': 1 }}>

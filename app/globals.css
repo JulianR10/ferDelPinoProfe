@@ -36,15 +36,7 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
 /* columna derecha: ficha de datos + botón principal (todo siempre visible) */
 .menu-col{position:absolute;right:6vw;top:50%;transform:translateY(-50%);width:min(34vw,500px);z-index:4;display:flex;flex-direction:column;gap:var(--s4)}
 .menu-col>*{animation:slide .4s steps(4) both;animation-delay:calc(var(--i)*120ms + 200ms)}
-@keyframes slide{from{opacity:0;transform:translateX(80px)}}
-.ribbon{position:absolute;top:var(--m);right:var(--m);z-index:4;background:var(--orange);border:3px solid #fff;padding:var(--s1) var(--s5);font-size:1.25rem;box-shadow:0 4px 0 var(--deep);transform:skewX(-12deg);animation:slideSk .4s steps(4) .2s both}
-.next{position:absolute;top:calc(var(--m) + 46px);right:var(--m);z-index:4;display:flex;align-items:center;gap:var(--s2);padding:var(--s1) var(--s4);background:linear-gradient(90deg,#0f3fc4d0,#0a2a8ad0);border:2px solid #ffffffa0;font-size:.95rem;line-height:1.2;transform:skewX(-12deg);animation:slideSk .4s steps(4) .5s both}
-.next svg{width:1.2em;height:1.2em;flex:none;color:var(--yellow)}
-.next b{color:var(--yellow)}
-.next .sep{font-style:normal}
-.next.live{background:linear-gradient(90deg,var(--yellow),#ff9f1a);color:var(--deep);border-color:#fff}
-.next.live svg,.next.live b{color:var(--deep)}
-@keyframes slideSk{from{opacity:0;transform:translateX(80px) skewX(-12deg)}}
+@keyframes slide{from{opacity:0}} /* solo aparece (sin desplazarse): en algunos celulares la animación con movimiento quedaba a medias y corría los bloques */
 @keyframes blink{50%{opacity:0}}
 .ico{flex:none;width:2.2em;height:2.2em;display:grid;place-items:center;border:2px solid #fff;background:#1a4fd0;font-size:.95rem}
 .ico svg{width:1.15em;height:1.15em}
@@ -74,6 +66,16 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
 .d.today{outline:3px solid #fff;outline-offset:1px}
 .d small{display:block;font-size:.75rem;line-height:1}
 
+/* cinta de noticias arriba (estilo ESPN): el próximo Grand Slam, el texto corre solo */
+.ticker{position:absolute;top:0;left:0;right:0;z-index:5;overflow:hidden;background:linear-gradient(90deg,#0f3fc4f0,#0a2a8af0);border-bottom:3px solid var(--orange);font-size:.85rem;line-height:1;white-space:nowrap}
+.ticker.live{background:linear-gradient(90deg,var(--yellow),#ff9f1a);color:var(--deep)}
+.belt{display:flex;width:max-content;animation:belt 40s linear infinite}
+.tk{display:flex;align-items:center;gap:var(--s2);padding:var(--s2) var(--s5)}
+.tk svg{width:1.3em;height:1.3em;color:var(--yellow)}
+.tk b{color:var(--yellow)}
+.ticker.live svg,.ticker.live b{color:var(--deep)}
+@keyframes belt{to{transform:translateX(-25%)}} /* 4 copias iguales: al correr una, vuelve al inicio sin salto */
+
 /* pie */
 .firma img{display:block;width:100%;height:auto}
 .firma{position:absolute;right:var(--s4);bottom:10px;z-index:5;width:80px;height:auto;filter:drop-shadow(0 1px 2px #000c);opacity:.7}
@@ -89,8 +91,6 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
   .mi{min-height:48px;font-size:1.2rem;padding:var(--s1) var(--s3) var(--s1) var(--s1)}
   .mi .sub{display:none}
   .plate{bottom:var(--s3)}
-  .next{top:52px}
-  .ribbon{top:var(--s3)}
 }
 
 /* celular (vertical): la misma ficha, compacta y con símbolos */
@@ -105,10 +105,6 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
   .plate .face{width:48px;height:48px;background-size:117px 117px;background-position:-37px 10px}
   .plate h1{font-size:1.5rem}
   .menu-col{left:50%;right:auto;top:auto;bottom:44px;width:min(calc(100vw - 2*var(--m)),480px);transform:translateX(-50%);gap:var(--s2)}
-  .ribbon{top:var(--s3);right:15px;font-size:1rem;padding:var(--s1) var(--s4)}
-  .next{top:48px;right:16px;font-size:.75rem;padding:var(--s1) var(--s3);gap:6px}
-  .next .sep{display:none}
-  .next b{display:block} /* en celular: nombre arriba y cuenta regresiva abajo, para no tapar a Fernando */
   .mi{gap:10px;padding:var(--s1) var(--s3) var(--s1) var(--s1);min-height:52px;font-size:1.25rem}
   .mi .sub,.xtra{display:none}
   .row{align-items:center;gap:10px;padding:var(--s1) var(--s3) var(--s1) var(--s1);min-height:52px}
