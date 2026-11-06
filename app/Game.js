@@ -1,10 +1,35 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MAPS, WA } from './links';
 
 const SEMANA = [['L', 1], ['M', 2], ['X', 3], ['J', 4], ['V', 5], ['S', 6], ['D', 0]]; // letra, día de JS
 const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 const CLASES = [2, 4]; // martes y jueves
+
+// Saque de Fernando: pose de espera + 3 cuadros del golpe, con cortes bruscos (sin transición).
+// dy baja los cuadros del golpe un poco: en fer1 los pies están más abajo de la imagen que en los otros y así no "saltan".
+const FRAMES = [
+  { src: '/fer1.webp', ms: 0, dy: 0 }, // espera
+  { src: '/fer2.webp', ms: 200, dy: 2.7 }, // armado
+  { src: '/fer3.webp', ms: 140, dy: 2.8 }, // impacto
+  { src: '/fer4.webp', ms: 700, dy: 2.4 }, // seguimiento
+];
+const PRIMER_GOLPE = 1200; // ms desde que carga la página
+const ESPERA = 5000; // ms entre un golpe y el siguiente
+
+// Recorrido de la pelota después del golpe. Fernando mira de frente y pega un revés: la pelota cruza delante de su cuerpo
+// y sale hacia abajo y a la izquierda, acercándose al espectador (por eso crece hasta salir de la pantalla).
+// x, y = centro de la pelota en % del cuadrado de Fernando (así es igual en escritorio y celular); s = escala; ms = cuánto dura ese paso.
+// El paso 1 es donde estaba dibujada en fer4. Para ajustar el recorrido basta con tocar estos números.
+const BOLA = [
+  { x: 48, y: 46, s: 1.0, ms: 55 }, // cruzando delante del cuerpo (viene de la raqueta)
+  { x: 14.1, y: 62.6, s: 1.0, ms: 70 },
+  { x: 8, y: 72, s: 1.35, ms: 70 },
+  { x: 1, y: 82, s: 1.85, ms: 70 },
+  { x: -8, y: 94, s: 2.5, ms: 70 },
+  { x: -20, y: 108, s: 3.3, ms: 70 },
+  { x: -34, y: 125, s: 4.0, ms: 70 }, // ya fuera de la pantalla
+];
 
 // Íconos simples (trazo). El de WhatsApp es el logo oficial en relleno (Simple Icons, CC0).
 const Ico = ({ children }) => (
@@ -31,6 +56,37 @@ function proximaClase(dia) {
 
 export default function Game() {
   const [now, setNow] = useState({ dia: 2, hora: 16 }); // se ajusta al día y hora reales del visitante
+  const [frame, setFrame] = useState(0); // cuadro de Fernando que se ve
+  const [bola, setBola] = useState(-1); // paso de la pelota que se ve (-1 = oculta)
+  const imgs = useRef([]);
+  const bolaImg = useRef(null);
+
+  // Hace el golpe (cuadros 1→4), la pelota se aleja, espera 5 s y repite. Sin movimiento si el teléfono pide "reducir movimiento".
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let vivo = true;
+    const ts = new Set(); // todos los temporizadores, para cancelarlos juntos al salir
+    const esperar = (ms) => new Promise((r) => { const id = setTimeout(() => { ts.delete(id); r(); }, ms); ts.add(id); });
+    const volar = async () => { // la pelota va por su cuenta y no frena a Fernando
+      for (let i = 0; i < BOLA.length && vivo; i++) { setBola(i); await esperar(BOLA[i].ms); }
+      if (vivo) setBola(-1);
+    };
+    (async () => {
+      await Promise.all([...imgs.current, bolaImg.current].map((el) => el?.decode().catch(() => {}))); // todo listo antes del primer golpe
+      await esperar(PRIMER_GOLPE);
+      while (vivo) {
+        while (document.hidden && vivo) await esperar(500); // con la pestaña oculta no gasta batería
+        for (let k = 1; k < FRAMES.length && vivo; k++) {
+          setFrame(k);
+          if (k === FRAMES.length - 1) volar(); // al llegar el seguimiento, sale la pelota
+          await esperar(FRAMES[k].ms);
+        }
+        setFrame(0);
+        await esperar(ESPERA);
+      }
+    })();
+    return () => { vivo = false; ts.forEach(clearTimeout); };
+  }, []);
 
   // Día y hora reales (para probar: ?dia=3 o ?hora=22)
   useEffect(() => {
@@ -45,8 +101,22 @@ export default function Game() {
       <div className="wash" />
       <div className="slab" />
 
-      <div className="fer" role="img" aria-label="Fernando Del Pino, profe de tenis">
-        <img src="/fer1.webp" alt="" fetchPriority="high" />
+      <div className={`fer ${frame === 0 ? 'idle' : 'swing'}`} role="img" aria-label="Fernando Del Pino, profe de tenis">
+        {FRAMES.map((f, i) => (
+          <img
+            key={f.src} ref={(el) => (imgs.current[i] = el)} src={f.src} alt="" className={`frame${i === frame ? ' on' : ''}`}
+            style={f.dy ? { transform: `translateY(${f.dy}%)` } : undefined} fetchPriority={i ? 'low' : 'high'}
+          />
+        ))}
+        {[2, 1, 0].map((atras) => { // la pelota + 2 estelas tenues en sus posiciones anteriores
+          const p = BOLA[bola - atras];
+          return (
+            <img
+              key={atras} ref={atras === 0 ? bolaImg : undefined} className="bola" src="/bola.png" alt="" aria-hidden="true"
+              style={p ? { left: p.x + '%', top: p.y + '%', '--s': p.s, opacity: [1, 0.5, 0.25][atras] } : undefined}
+            />
+          );
+        })}
       </div>
 
       <div className="plate">
