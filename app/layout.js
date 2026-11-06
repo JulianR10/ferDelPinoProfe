@@ -1,7 +1,8 @@
 import { Barlow_Condensed } from 'next/font/google';
 import './globals.css';
 
-const font = Barlow_Condensed({ weight: ['600', '800'], style: ['normal', 'italic'], subsets: ['latin'], display: 'swap' });
+const display = Barlow_Condensed({ weight: '800', style: 'italic', subsets: ['latin'], display: 'swap' }); // títulos y botones
+const text = Barlow_Condensed({ weight: '600', style: 'normal', subsets: ['latin'], display: 'swap', variable: '--font-text' }); // notas en minúscula
 
 export const metadata = {
   title: 'Fernando Del Pino · Profe de tenis · Laguna Larga',
@@ -18,7 +19,7 @@ export const viewport = { width: 'device-width', initialScale: 1, viewportFit: '
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body className={font.className}>{children}</body>
+      <body className={`${display.className} ${text.variable}`}>{children}</body>
     </html>
   );
 }
