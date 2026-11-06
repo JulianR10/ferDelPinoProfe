@@ -11,7 +11,7 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
 /* escenario: foto + velo azul + franja diagonal */
 .stage{position:relative;height:100vh;height:100svh;min-height:360px;overflow:hidden;background:#7fb4e0}
 @media (max-height:359px){html,body{overflow-y:auto}} /* si ni así cabe, se puede bajar con el dedo en vez de quedar cortado */
-.bg{position:absolute;inset:-3%;background:#7fb4e0 url(/campoTenis.webp) 50% 55%/cover no-repeat;animation:drift 24s ease-in-out infinite alternate}
+.bg{position:absolute;inset:-3%;will-change:transform;background:#7fb4e0 url(/campoTenis.webp) 50% 55%/cover no-repeat;animation:drift 24s ease-in-out infinite alternate}
 @keyframes drift{to{transform:scale(1.05) translateX(-1%)}}
 .wash{position:absolute;inset:0;background:linear-gradient(100deg,transparent 25%,#0a2a8a55 60%,#0a2a8ab0 100%),repeating-linear-gradient(-60deg,#ffffff12 0 2px,transparent 2px 48px)}
 .slab{position:absolute;top:-5%;bottom:-5%;right:-8vw;width:50vw;background:linear-gradient(#0f3fc4ee,#0a2a8af5);transform:skewX(-10deg);border-left:6px solid #fff;box-shadow:-14px 0 0 var(--orange),-28px 0 0 #ffffff55}
@@ -47,9 +47,10 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
 .mi .arr{margin-left:auto;animation:blink .8s steps(2) infinite}
 .mi:hover,.mi:focus-visible{background:#fff}
 .info{display:flex;flex-direction:column;gap:var(--s2)}
-.row{display:flex;align-items:flex-start;gap:var(--s3);padding:var(--s2) var(--s4) var(--s2) var(--s2);background:linear-gradient(90deg,#0f3fc4d0,#0a2a8ad0);border:2px solid #ffffffa0;transform:skewX(-12deg);line-height:1.15}
+.row{display:flex;align-items:flex-start;gap:var(--s3);padding:var(--s2) var(--s4) var(--s2) var(--s2);background:linear-gradient(90deg,#0f3fc4,#0a2a8a);border:2px solid #ffffffa0;transform:skewX(-12deg);line-height:1.15}
 .row .txt{display:flex;flex-direction:column;gap:var(--s1);min-width:0}
-.row .lbl{font-size:.75rem;line-height:1;color:var(--yellow);letter-spacing:.08em}
+.row .lbl{align-self:flex-start;padding:3px 8px;background:var(--yellow);color:var(--deep);font-size:.8rem;line-height:1;letter-spacing:.08em} /* etiqueta tipo chip: se lee primero qué es cada ficha */
+.row .ico{width:2.8em;height:2.8em;background:var(--yellow);color:var(--deep);border-color:var(--deep)}
 .row .val{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s1) var(--s3);font-size:clamp(1.05rem,1.6vw,1.35rem)}
 .note{font-family:var(--font-text);font-style:normal;font-weight:600;font-size:.8rem;text-transform:none;opacity:.9}
 .lnk{position:relative;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px;cursor:pointer}
@@ -104,7 +105,9 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
   .plate{left:50%;bottom:auto;top:calc(4svh + var(--w0) - 14px);width:max-content;max-width:calc(100vw - 2*var(--m));transform:translateX(-50%) skewX(-8deg);padding:var(--s2) var(--s4) var(--s2) var(--s2)}
   .plate .face{width:48px;height:48px;background-size:117px 117px;background-position:-37px 10px}
   .plate h1{font-size:1.5rem}
-  .menu-col{left:50%;right:auto;top:auto;bottom:44px;width:min(calc(100vw - 2*var(--m)),480px);transform:translateX(-50%);gap:var(--s2)}
+  /* el bloque va desde debajo de la placa (64px de alto aprox.) hasta el pie; el ::before vacío hace que el hueco de arriba (placa→datos) sea igual al de abajo (datos→botón) */
+  .menu-col{left:50%;right:auto;top:calc(4svh + var(--w0) + 56px);bottom:44px;width:min(calc(100vw - 2*var(--m)),480px);transform:translateX(-50%);gap:var(--s2);justify-content:space-between}
+  .menu-col::before{content:""}
   .mi{gap:10px;padding:var(--s1) var(--s3) var(--s1) var(--s1);min-height:52px;font-size:1.25rem}
   .mi .sub,.xtra{display:none}
   .row{align-items:center;gap:10px;padding:var(--s1) var(--s3) var(--s1) var(--s1);min-height:52px}
