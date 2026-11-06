@@ -96,12 +96,12 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
 /* celular (vertical): la misma ficha, compacta y con símbolos */
 @media (max-aspect-ratio:1/1){
   /* --w = lado de Fernando: tan grande como quepa, dejando sitio a la placa y a la ficha (--res = alto reservado) */
-  :root{--res:365px;--w:max(190px,min(104vw,calc(96svh - var(--res))))}
+  :root{--res:365px;--w0:max(190px,min(104vw,calc(96svh - var(--res))));--w:calc(var(--w0)*.85)} /* --w0 = hueco disponible; Fernando ocupa el 85% y queda centrado entre la cinta y la placa */
   .slab{display:none}
   .wash{background:linear-gradient(0deg,#0a2a8ad0 0%,#0a2a8a55 34%,transparent 58%)}
   .bg{background-image:url(/campoTenisMobile.webp);background-size:auto 118%;background-position:50% 100%} /* fondo vertical hecho para celular (el de escritorio no se descarga aquí) */
-  .fer{left:50%;top:4svh;bottom:auto;transform:translateX(-50%);width:var(--w)}
-  .plate{left:50%;bottom:auto;top:calc(4svh + var(--w) - 14px);width:max-content;max-width:calc(100vw - 2*var(--m));transform:translateX(-50%) skewX(-8deg);padding:var(--s2) var(--s4) var(--s2) var(--s2)}
+  .fer{left:50%;top:calc(36px + (4svh + var(--w0) - 50px - var(--w)) / 2);bottom:auto;transform:translateX(-50%);width:var(--w)}
+  .plate{left:50%;bottom:auto;top:calc(4svh + var(--w0) - 14px);width:max-content;max-width:calc(100vw - 2*var(--m));transform:translateX(-50%) skewX(-8deg);padding:var(--s2) var(--s4) var(--s2) var(--s2)}
   .plate .face{width:48px;height:48px;background-size:117px 117px;background-position:-37px 10px}
   .plate h1{font-size:1.5rem}
   .menu-col{left:50%;right:auto;top:auto;bottom:44px;width:min(calc(100vw - 2*var(--m)),480px);transform:translateX(-50%);gap:var(--s2)}
