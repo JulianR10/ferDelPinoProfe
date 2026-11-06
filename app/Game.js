@@ -12,7 +12,7 @@ const FRAMES = [
   { src: '/fer1.webp', ms: 0, dy: 0 }, // espera
   { src: '/fer2.webp', ms: 200, dy: 2.7 }, // armado
   { src: '/fer3.webp', ms: 140, dy: 2.8 }, // impacto
-  { src: '/fer4.webp', ms: 700, dy: 2.4 }, // seguimiento
+  { src: '/fer4.webp', ms: 700, dy: 2.7 }, // seguimiento
 ];
 const PRIMER_GOLPE = 1200; // ms desde que carga la página
 const ESPERA = 5000; // ms entre un golpe y el siguiente
@@ -22,6 +22,7 @@ const ESPERA = 5000; // ms entre un golpe y el siguiente
 // x, y = centro de la pelota en % del cuadrado de Fernando (así es igual en escritorio y celular); s = escala; ms = cuánto dura ese paso.
 // El paso 1 es donde estaba dibujada en fer4. Para ajustar el recorrido basta con tocar estos números.
 const BOLA = [
+  { x: 80, y: 30, s: 1.0, ms: 50 }, // sale de la raqueta (donde estaba en fer3)
   { x: 48, y: 46, s: 1.0, ms: 55 }, // cruzando delante del cuerpo (viene de la raqueta)
   { x: 14.1, y: 62.6, s: 1.0, ms: 70 },
   { x: 8, y: 72, s: 1.35, ms: 70 },
