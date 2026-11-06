@@ -106,7 +106,7 @@ export default function Game() {
         </a>
       </section>
 
-      <a className="firma" href="https://julianrecarte.dev/es" target="_blank" rel="noopener"><img src="/firma.png" alt="Sitio hecho por Julian Recarte" /></a>
+      <a className="firma" href="https://julianrecarte.dev/es" target="_blank" rel="noopener"><img src="/firma-blanca.png" alt="Sitio hecho por Julian Recarte" /></a>
     </main>
   );
 }

@@ -62,7 +62,7 @@ h1{-webkit-text-stroke:3px var(--deep);paint-order:stroke fill;text-shadow:0 4px
 
 /* pie */
 .firma img{display:block;width:100%;height:auto}
-.firma{position:absolute;right:16px;bottom:10px;z-index:5;width:120px;height:auto;filter:brightness(0) invert(1) drop-shadow(0 1px 2px #000c);opacity:.9}
+.firma{position:absolute;right:16px;bottom:10px;z-index:5;width:120px;height:auto;filter:drop-shadow(0 1px 2px #000c);opacity:.9}
 
 /* celular (vertical): la misma ficha, compacta y con símbolos */
 @media (max-aspect-ratio:1/1){
